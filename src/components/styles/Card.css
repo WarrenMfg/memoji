@@ -108,6 +108,42 @@
   }
 }
 
+.remove {
+  -webkit-animation: remove 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation: remove 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@-webkit-keyframes remove {
+  0% {
+    -webkit-transform: rotateY(180deg) scale(1);
+    transform: rotateY(180deg) scale(1);
+    background-color: whitesmoke;
+    background-image: none;
+  }
+  100% {
+    -webkit-transform: rotateY(180deg) scale(0);
+    transform: rotateY(180deg) scale(0);
+    background-color: whitesmoke;
+    background-image: none;
+    filter: blur(40px);
+  }
+}
+@keyframes remove {
+  0% {
+    -webkit-transform: rotateY(180deg) scale(1);
+    transform: rotateY(180deg) scale(1);
+    background-color: whitesmoke;
+    background-image: none;
+  }
+  100% {
+    -webkit-transform: rotateY(180deg) scale(0);
+    transform: rotateY(180deg) scale(0);
+    background-color: whitesmoke;
+    background-image: none;
+    filter: blur(40px);
+  }
+}
+
 .emoji {
   -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);

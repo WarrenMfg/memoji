@@ -15,8 +15,6 @@ function Board() {
   // track attempts
   const [attempts, setAttempts] = useState(0);
 
-  console.log(activeCards, matches, attempts);
-
   // track activeCards
   useEffect(() => {
     // when empty
@@ -32,7 +30,6 @@ function Board() {
     if (activeCards[0].slice(0, -2) === activeCards[1].slice(0, -2)) {
       // increment matches
       setMatches(matches + 1);
-      // TODO - remove cards from DOM
     }
     // increment attempts regardless of matching cards
     setAttempts(attempts + 1);
