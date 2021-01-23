@@ -43,6 +43,10 @@ function Card({ emoji, dataEmoji, activeCards }) {
     if (areEqual && isThisCard) {
       // animate cards and remove from DOM
       setTimeout(() => cardRef.current.classList.add('remove'), 1100);
+      setTimeout(() => {
+        cardRef.current.parentElement.innerHTML =
+          '<div class="empty w-100 h-100"></div>';
+      }, 1500);
       setTimeout(() => cardRef.current.remove(), 1500);
     }
   }, [activeCards]);

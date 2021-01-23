@@ -29,19 +29,12 @@
 /*
  * Media Queries
  */
-@media (min-height: 770px) {
+@media (min-height: 770px), (max-width: 220px) {
   .scoreboard {
     padding: 0.5em 0 0.5em 0;
     flex-direction: column;
   }
   .matches {
     margin: 6px 0;
-  }
-}
-
-@media (min-width: 768px) {
-  .scoreboard {
-    max-width: initial;
-    width: 696px;
   }
 }

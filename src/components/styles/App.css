@@ -10,6 +10,7 @@ h1 {
 
 h1 span {
   color: #ff4787;
+  text-decoration: underline;
 }
 
 .boards-container {
@@ -28,6 +29,6 @@ h1 span {
 @media (min-width: 768px) {
   .boards-container {
     max-width: initial;
-    width: 696px;
+    width: 650px;
   }
 }
