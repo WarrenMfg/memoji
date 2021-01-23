@@ -68,7 +68,7 @@ function Board({
   // render emojis twice so they have a match
   return (
     <div
-      className='board h-100 d-flex flex-wrap justify-content-center align-items-center'
+      className='board d-flex flex-wrap justify-content-center align-items-center'
       onClick={handleCardClick}
       ref={boardRef}
     >

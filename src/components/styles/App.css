@@ -3,14 +3,31 @@ body {
   background-color: ivory;
 }
 
-#root {
-  height: 75vh;
-}
-
 h1 {
   color: #b33b64;
+  padding: 0.25em;
 }
 
 h1 span {
   color: #ff4787;
+}
+
+.boards-container {
+  max-width: 320px;
+}
+
+/*
+ * Media Queries
+ */
+@media (min-height: 770px) {
+  h1 {
+    padding: 0.5em;
+  }
+}
+
+@media (min-width: 768px) {
+  .boards-container {
+    max-width: initial;
+    width: 696px;
+  }
 }

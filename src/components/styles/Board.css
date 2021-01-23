@@ -1,13 +1,15 @@
 .board {
-  max-width: 320px;
+  height: 70vh;
+  /* max-width: 320px; */
   margin: auto;
 }
 
 /*
  * Media Queries
  */
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
   .board {
-    max-width: 696px;
+    max-width: initial;
+    width: 696px;
   }
-}
+} */

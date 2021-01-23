@@ -44,33 +44,36 @@ function App() {
     );
   }, []);
 
-  const handleShuffleClick = () => {
+  const handleShuffleClick = e => {
     setShuffledEmojis([]);
     setAttempts(0);
     setMatches(0);
     setActiveCards([]);
     setTimeout(() => setShuffledEmojis(shuffleEmojis(shuffledEmojis)), 0);
+    e.target.blur();
   };
 
   return (
-    <main className='container h-100'>
-      <h1 className='text-center p-3 m-0'>
+    <main className='container d-flex flex-column align-items-center'>
+      <h1 className='text-center m-0'>
         <span>Mem</span>oji
       </h1>
-      <Board
-        shuffledEmojis={shuffledEmojis}
-        activeCards={activeCards}
-        setActiveCards={setActiveCards}
-        attempts={attempts}
-        setAttempts={setAttempts}
-        matches={matches}
-        setMatches={setMatches}
-      />
-      <Scoreboard
-        attempts={attempts}
-        matches={matches}
-        shuffle={handleShuffleClick}
-      />
+      <div className='boards-container'>
+        <Board
+          shuffledEmojis={shuffledEmojis}
+          activeCards={activeCards}
+          setActiveCards={setActiveCards}
+          attempts={attempts}
+          setAttempts={setAttempts}
+          matches={matches}
+          setMatches={setMatches}
+        />
+        <Scoreboard
+          attempts={attempts}
+          matches={matches}
+          shuffle={handleShuffleClick}
+        />
+      </div>
     </main>
   );
 }

@@ -54,7 +54,12 @@ function Card({ emoji, dataEmoji, activeCards }) {
         ref={cardRef}
         className='card w-100 h-100 d-flex justify-content-center align-items-center'
       >
-        <span className='emoji'>{isEmojiVisible && emoji}</span>
+        <span
+          className='emoji'
+          style={{ visibility: isEmojiVisible ? 'visible' : 'hidden' }}
+        >
+          {emoji}
+        </span>
       </div>
     </div>
   );

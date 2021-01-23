@@ -1,16 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './styles/Scoreboard.css';
+
 function Scoreboard({ attempts, matches, shuffle }) {
   return (
-    <div className='pt-3 pb-3 d-flex justify-content-between align-items-center '>
-      <div className='attempts'>{attempts}</div>
-
-      <div className='matches'>{matches}</div>
-
-      <div className='btn' onClick={shuffle}>
-        Shuffle
+    <div className='scoreboard px-1'>
+      <div className='attempts d-flex justify-content-center align-items-center'>
+        ❌&nbsp;&nbsp;{attempts}
       </div>
+
+      <div className='matches d-flex justify-content-center align-items-center'>
+        ✅&nbsp;&nbsp;{matches}
+      </div>
+
+      <button type='button' className='btn btn-primary' onClick={shuffle}>
+        Shuffle
+      </button>
     </div>
   );
 }
