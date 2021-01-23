@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "parcel watch src/index.html --no-source-maps --out-dir dist",
+    "build": "parcel build src/index.html --out-dir distFrontend"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +19,7 @@
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-react": "^7.22.0",
+    "parcel-bundler": "^1.12.4",
     "prettier": "^2.2.1"
   }
 }
