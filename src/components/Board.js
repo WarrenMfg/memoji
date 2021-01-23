@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import Card from './Card';
 
 function Board({ emojis }) {
@@ -10,5 +12,9 @@ function Board({ emojis }) {
     </div>
   );
 }
+
+Board.propTypes = {
+  emojis: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
+};
 
 export default Board;
