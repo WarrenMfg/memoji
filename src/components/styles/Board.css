@@ -1,0 +1,10 @@
+.board {
+  max-width: 320px;
+  margin: auto;
+}
+
+@media (min-width: 768px) {
+  .board {
+    max-width: 696px;
+  }
+}

@@ -1,0 +1,16 @@
+.card-container {
+  height: calc(1 / 6 * 100%);
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.card {
+  background-color: whitesmoke;
+}
+
+@media (min-width: 768px) {
+  .card-container {
+    height: 25%;
+    font-size: 3em;
+  }
+}

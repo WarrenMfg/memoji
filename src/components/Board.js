@@ -1,20 +1,46 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 
 import Card from './Card';
 
-function Board({ emojis }) {
+import './styles/Board.css';
+
+function Board() {
+  const [emojis] = useState([
+    '😀',
+    '😂',
+    '😘',
+    '😜',
+    '🧐',
+    '🤓',
+    '😎',
+    '🥳',
+    '🥴',
+    '🤑',
+    '😳',
+    '🙄'
+  ]);
+
+  // map emojis twice to render 2 of each
   return (
-    <div>
+    <div className='board h-100 d-flex flex-wrap justify-content-center align-items-center'>
       {emojis.map((emoji, i) => (
-        <Card key={`${i}-${emoji}`} emoji={emoji} />
+        <div
+          key={`${i}-${emoji}`}
+          className='card-container d-flex justify-content-center align-items-center p-1 col-3 col-md-2'
+        >
+          <Card emoji={emoji} />
+        </div>
+      ))}
+      {emojis.map((emoji, i) => (
+        <div
+          key={`${i}-${emoji}`}
+          className='card-container d-flex justify-content-center align-items-center p-1 col-3 col-md-2'
+        >
+          <Card emoji={emoji} />
+        </div>
       ))}
     </div>
   );
 }
-
-Board.propTypes = {
-  emojis: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
-};
 
 export default Board;

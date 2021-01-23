@@ -2,3 +2,15 @@ body {
   min-height: 100vh;
   background-color: ivory;
 }
+
+#root {
+  height: 75vh;
+}
+
+h1 {
+  color: #b33b64;
+}
+
+h1 span {
+  color: #ff4787;
+}
