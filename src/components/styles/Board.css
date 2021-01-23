@@ -1,15 +1,4 @@
 .board {
   height: 70vh;
-  /* max-width: 320px; */
   margin: auto;
 }
-
-/*
- * Media Queries
- */
-/* @media (min-width: 768px) {
-  .board {
-    max-width: initial;
-    width: 696px;
-  }
-} */
