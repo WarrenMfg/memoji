@@ -3,6 +3,9 @@
   margin: auto;
 }
 
+/*
+ * Media Queries
+ */
 @media (min-width: 768px) {
   .board {
     max-width: 696px;

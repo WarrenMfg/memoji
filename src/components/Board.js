@@ -32,18 +32,12 @@ function Board() {
     if (activeCards[0].slice(0, -2) === activeCards[1].slice(0, -2)) {
       // increment matches
       setMatches(matches + 1);
-      // increment attempts
-      setAttempts(attempts + 1);
-      // setTimeout for card turnover animation
-      // TODO
-
-      // otherwise, if cards do not match
-    } else {
-      // only increment attempts
-      setAttempts(attempts + 1);
-      // setTimeout for card turnover animation
-      // TODO
+      // TODO - remove cards from DOM
     }
+    // increment attempts regardless of matching cards
+    setAttempts(attempts + 1);
+    // set timer to clear activeCards array
+    setTimeout(() => setActiveCards([]), 1500);
   }, [activeCards]);
 
   const handleCardClick = e => {
