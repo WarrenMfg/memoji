@@ -7,7 +7,6 @@ import './styles/Card.css';
  * Card component - basic game piece
  */
 function Card({ emoji, dataEmoji, activeCards }) {
-  console.log('Card:', emoji);
   // track if emoji is visible
   const [isEmojiVisible, setIsEmojiVisible] = useState(false);
   // get ref to this card to toggle classes
@@ -43,7 +42,7 @@ function Card({ emoji, dataEmoji, activeCards }) {
     // if cards are equal and this component is one of those cards
     if (areEqual && isThisCard) {
       // animate cards and remove from DOM
-      setTimeout(() => cardRef.current.classList.add('remove'), 1000);
+      setTimeout(() => cardRef.current.classList.add('remove'), 1100);
       setTimeout(() => cardRef.current.remove(), 1500);
     }
   }, [activeCards]);
@@ -68,10 +67,18 @@ Card.propTypes = {
 };
 
 export default React.memo(Card, (prevProps, nextProps) => {
+  // if clicked
   if (nextProps.activeCards.includes(nextProps.dataEmoji)) {
     // not equal; do not use memo
     return false;
   }
+
+  // if activeCards reset
+  if (prevProps.activeCards.length > nextProps.activeCards.length) {
+    // not equal; do not use memo
+    return false;
+  }
+
   // are equal; use memo
   return true;
 });

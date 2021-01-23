@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import Card from './Card';
 
@@ -7,13 +8,24 @@ import './styles/Board.css';
 /**
  * Board component - stateful container
  */
-function Board() {
+function Board({ shuffledEmojis }) {
+  const boardRef = useRef(null);
   // track active cards
   const [activeCards, setActiveCards] = useState([]);
   // track number of matched cards
   const [matches, setMatches] = useState(0);
   // track attempts
   const [attempts, setAttempts] = useState(0);
+
+  // swirl cards on updated shuffledEmojis
+  useEffect(() => {
+    // get card containers
+    const cards = [...boardRef.current.children];
+    // show cards
+    cards.forEach((card, i) => {
+      setTimeout(() => card.classList.add('swirl'), i * 100);
+    });
+  }, [shuffledEmojis]);
 
   // track activeCards
   useEffect(() => {
@@ -56,45 +68,24 @@ function Board() {
     <div
       className='board h-100 d-flex flex-wrap justify-content-center align-items-center'
       onClick={handleCardClick}
+      ref={boardRef}
     >
-      {emojis.reduce((acc, emoji) => {
-        const one = (
-          <Card
-            emoji={emoji}
-            key={`${emoji}-1`}
-            dataEmoji={`${emoji}-1`}
-            activeCards={activeCards}
-          />
-        );
-        const two = (
-          <Card
-            emoji={emoji}
-            key={`${emoji}-2`}
-            dataEmoji={`${emoji}-2`}
-            activeCards={activeCards}
-          />
-        );
-        acc.push(one, two);
-        return acc;
-      }, [])}
+      {shuffledEmojis.map(emojiArr => (
+        <Card
+          emoji={emojiArr[0]}
+          key={emojiArr[1]}
+          dataEmoji={emojiArr[1]}
+          activeCards={activeCards}
+        />
+      ))}
     </div>
   );
 }
 
-// a list of emojis to use
-const emojis = [
-  '😀',
-  '😂',
-  '😘',
-  '😜',
-  '🧐',
-  '🤓',
-  '😎',
-  '🥳',
-  '🥴',
-  '🤑',
-  '😳',
-  '🙄'
-];
+Board.propTypes = {
+  shuffledEmojis: PropTypes.arrayOf(
+    PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
+  ).isRequired
+};
 
 export default Board;
