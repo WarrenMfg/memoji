@@ -4,6 +4,9 @@ import Card from './Card';
 
 import './styles/Board.css';
 
+/**
+ * Board component - stateful container
+ */
 function Board() {
   const [emojis] = useState([
     '😀',
