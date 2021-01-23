@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import Card from './Card';
@@ -6,16 +6,18 @@ import Card from './Card';
 import './styles/Board.css';
 
 /**
- * Board component - stateful container
+ * Board component - container
  */
-function Board({ shuffledEmojis }) {
+function Board({
+  shuffledEmojis,
+  activeCards,
+  setActiveCards,
+  attempts,
+  setAttempts,
+  matches,
+  setMatches
+}) {
   const boardRef = useRef(null);
-  // track active cards
-  const [activeCards, setActiveCards] = useState([]);
-  // track number of matched cards
-  const [matches, setMatches] = useState(0);
-  // track attempts
-  const [attempts, setAttempts] = useState(0);
 
   // swirl cards on updated shuffledEmojis
   useEffect(() => {
@@ -34,7 +36,7 @@ function Board({ shuffledEmojis }) {
     // if only one card
     if (activeCards.length < 2) {
       // increment attempts
-      setAttempts(attempts + 1);
+      // setAttempts(attempts + 1);
       return;
     }
 
@@ -85,7 +87,13 @@ function Board({ shuffledEmojis }) {
 Board.propTypes = {
   shuffledEmojis: PropTypes.arrayOf(
     PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
-  ).isRequired
+  ).isRequired,
+  activeCards: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  setActiveCards: PropTypes.func.isRequired,
+  attempts: PropTypes.number.isRequired,
+  setAttempts: PropTypes.func.isRequired,
+  matches: PropTypes.number.isRequired,
+  setMatches: PropTypes.func.isRequired
 };
 
 export default Board;
