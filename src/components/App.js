@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Board from './Board';
 import Scoreboard from './Scoreboard';
 
@@ -17,8 +17,7 @@ function App() {
   // track number of matched cards
   const [matches, setMatches] = useState(0);
 
-  // TODO - add score/number of match attempts?
-
+  // on mount, shuffle emojis
   useEffect(() => {
     setShuffledEmojis(
       shuffleEmojis(
@@ -44,6 +43,7 @@ function App() {
     );
   }, []);
 
+  // shuffle button click handler
   const handleShuffleClick = e => {
     setShuffledEmojis([]);
     setAttempts(0);
@@ -55,7 +55,7 @@ function App() {
 
   return (
     <main className='container d-flex flex-column align-items-center'>
-      <h1 className='text-center m-0'>
+      <h1 className='focus-in-expand text-center m-0'>
         <span>Mem</span>oji
       </h1>
       <div className='boards-container'>
