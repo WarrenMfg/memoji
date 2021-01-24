@@ -31,6 +31,7 @@ function Card({ emoji, dataEmoji, activeCards }) {
       cardRef.current.classList.remove('show');
       // set timer to hide emoji halfway through card flip animation
       Q.enqueue(setTimeout(() => setIsEmojiVisible(false), 200));
+      return;
     }
 
     // determine if activeCards are equal

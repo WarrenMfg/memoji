@@ -60,13 +60,17 @@ function Board({
   }, [activeCards]);
 
   useEffect(() => {
+    if (userClickedSolve) {
+      Q.dequeueAll().forEach(id => clearTimeout(id));
+    }
+  }, [userClickedSolve]);
+
+  useEffect(() => {
     if (matches === 12) {
       canvasRef.current.width = boardRef.current.clientWidth;
       canvasRef.current.height = boardRef.current.clientHeight;
       // add confetti global options
-      const confetti = canvasConfetti.create(canvasRef.current, {
-        resize: true
-      });
+      const confetti = canvasConfetti.create(canvasRef.current);
       // make confetti with instance options
       Q.enqueue(
         setTimeout(() => {
@@ -99,6 +103,7 @@ function Board({
       onClick={handleCardClick}
       ref={boardRef}
     >
+      {/* cards */}
       {shuffledEmojis.map(emojiArr => (
         <Card
           emoji={emojiArr[0]}
@@ -107,6 +112,13 @@ function Board({
           activeCards={activeCards}
         />
       ))}
+
+      {/* masking div */}
+      {userClickedSolve && (
+        <div className='user-clicked-solve position-absolute'></div>
+      )}
+
+      {/* confetti */}
       {matches === 12 && (
         <canvas
           id='canvas-confetti'

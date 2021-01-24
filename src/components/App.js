@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Board from './Board';
 import Scoreboard from './Scoreboard';
+import Queue from '../utils/Queue';
 
 import './styles/App.css';
 
@@ -22,50 +23,49 @@ function App() {
   const [isAnimating, setIsAnimating] = useState(true);
   // track if user clicked solve
   const [userClickedSolve, setUserClickedSolve] = useState(false);
+  // track timers
+  const [Q] = useState(new Queue());
 
   // on mount, shuffle emojis
   useEffect(() => {
-    setShuffledEmojis(
-      shuffleEmojis(
-        [
-          '😀',
-          '😂',
-          '😘',
-          '😜',
-          '🧐',
-          '🤓',
-          '😎',
-          '🥳',
-          '🥴',
-          '🤑',
-          '😳',
-          '🙄'
-        ].reduce((acc, emoji) => {
-          // double each emoji and include React key
-          acc.push([emoji, `${emoji}-1`], [emoji, `${emoji}-2`]);
-          return acc;
-        }, [])
-      )
-    );
+    setShuffledEmojis(shuffleEmojis(emojis));
 
-    setTimeout(() => setIsAnimating(false), 2500);
+    Q.enqueue(setTimeout(() => setIsAnimating(false), 2500));
+
+    return () => {
+      Q.dequeueAll().forEach(id => clearTimeout(id));
+    };
   }, []);
 
+  // when shuffledEmojis are emptied, then shuffle
   useEffect(() => {
-    if (!isAnimating) {
-      console.log('useEffect is not animating');
+    if (!shuffledEmojis.length) {
+      setShuffledEmojis(shuffleEmojis(emojis));
+    }
+  }, [shuffledEmojis]);
+
+  // when isAnimating === true
+  useEffect(() => {
+    if (isAnimating) {
+      Q.enqueue(setTimeout(() => setIsAnimating(false), 2500));
     }
   }, [isAnimating]);
 
+  // solve when userClickedSolve === true
+  useEffect(() => {
+    if (userClickedSolve) {
+      solve([...boardRef.current.children], Q);
+    }
+  }, [userClickedSolve]);
+
   // shuffle button click handler
   const handleShuffleClick = e => {
+    Q.dequeueAll().forEach(id => clearTimeout(id));
     setShuffledEmojis([]);
     setAttempts(0);
     setMatches(0);
     setActiveCards([]);
-    setTimeout(() => setShuffledEmojis(shuffleEmojis(shuffledEmojis)), 0);
     setIsAnimating(true);
-    setTimeout(() => setIsAnimating(false), 2500);
     setUserClickedSolve(false);
     e.target.blur();
   };
@@ -74,12 +74,12 @@ function App() {
     // if animating or already solving, do nothing
     if (isAnimating || userClickedSolve) return;
 
+    // clear currently clicked cards
+    setActiveCards([]);
+
     // toggle user clicked solve
     // (prevents cards from being clicked)
     setUserClickedSolve(true);
-
-    // solve
-    solve([...boardRef.current.children]);
   };
 
   return (
@@ -114,7 +114,33 @@ function App() {
 
 export default App;
 
-// shuffles emoji cards
+/**
+ * Nested arrays of emojis and React keys
+ */
+const emojis = [
+  '😀',
+  '😂',
+  '😘',
+  '😜',
+  '🧐',
+  '🤓',
+  '😎',
+  '🥳',
+  '🥴',
+  '🤑',
+  '😳',
+  '🙄'
+].reduce((acc, emoji) => {
+  // double each emoji and include React key
+  acc.push([emoji, `${emoji}-1`], [emoji, `${emoji}-2`]);
+  return acc;
+}, []);
+
+/**
+ * Shuffles emoji cards
+ *
+ * @param emojis Nested arrays of emojis and React keys
+ */
 const shuffleEmojis = emojis => {
   for (let i = emojis.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
@@ -124,33 +150,49 @@ const shuffleEmojis = emojis => {
   return emojis;
 };
 
-// solve memory game
-async function solve(containers) {
-  for (let i = 0; i < containers.length; i++) {
-    let first;
+/**
+ * Solves memory game
+ *
+ * @param containers DOM elements containing cards
+ * @param Q A queue to enqueue timer ids
+ */
+async function solve(containers, Q) {
+  let first;
+  // iterate over containers - 1 to avoid masking div
+  for (let i = 0; i < containers.length - 1; i++) {
+    // if card, then assign; otherwise, card has already been removed
     if (containers[i].firstElementChild.classList.contains('card')) {
       first = containers[i].firstElementChild;
     } else continue;
 
+    // flip card
     first.click();
 
+    let second;
+    // find matching card
     for (let j = 0; j < containers.length; j++) {
+      // skip first card
       if (j === i) continue;
-      let second;
+      // if card, then assign; otherwise, continue iterating
       if (containers[j].firstElementChild.classList.contains('card')) {
         second = containers[j].firstElementChild;
       } else continue;
 
+      // if match found
       if (
         first.dataset.emoji.slice(0, -2) === second.dataset.emoji.slice(0, -2)
       ) {
+        // pause for effect
         await new Promise(resolve => {
-          setTimeout(() => resolve(), 1000);
+          Q.enqueue(setTimeout(() => resolve(), 1000));
         });
+        // flip card
         second.click();
+        // pause for effect
         await new Promise(resolve => {
-          setTimeout(() => resolve(), 2000);
+          Q.enqueue(setTimeout(() => resolve(), 2000));
         });
+        // break to find next matching pair
         break;
       }
     }
