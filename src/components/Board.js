@@ -1,6 +1,7 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import canvasConfetti from 'canvas-confetti';
 import PropTypes from 'prop-types';
+import Queue from '../utils/Queue';
 
 import Card from './Card';
 
@@ -22,6 +23,15 @@ function Board({
   const boardRef = useRef(null);
   // track canvas
   const canvasRef = useRef(null);
+  // track timers
+  const [Q] = useState(new Queue());
+
+  // clear timers on unmount
+  useEffect(() => {
+    return () => {
+      Q.dequeueAll().forEach(id => clearTimeout(id));
+    };
+  }, []);
 
   // swirl cards on updated shuffledEmojis
   useEffect(() => {
@@ -29,20 +39,14 @@ function Board({
     const cards = [...boardRef.current.children];
     // show cards
     cards.forEach((card, i) => {
-      setTimeout(() => card.classList.add('swirl'), i * 100);
+      Q.enqueue(setTimeout(() => card.classList.add('swirl'), i * 100));
     });
   }, [shuffledEmojis]);
 
   // track activeCards
   useEffect(() => {
-    // when empty
-    if (!activeCards.length) return;
-    // if only one card
-    if (activeCards.length < 2) {
-      // increment attempts
-      // setAttempts(attempts + 1);
-      return;
-    }
+    // when empty or only one card, do nothing
+    if (activeCards.length < 2) return;
 
     // if cards match
     if (activeCards[0].slice(0, -2) === activeCards[1].slice(0, -2)) {
@@ -52,7 +56,7 @@ function Board({
     // increment attempts regardless of matching cards
     setAttempts(attempts + 1);
     // set timer to clear activeCards array
-    setTimeout(() => setActiveCards([]), 1500);
+    Q.enqueue(setTimeout(() => setActiveCards([]), 1500));
   }, [activeCards]);
 
   useEffect(() => {
@@ -64,12 +68,14 @@ function Board({
         resize: true
       });
       // make confetti with instance options
-      setTimeout(() => {
-        confetti({
-          particleCount: 100,
-          origin: { x: 0.5, y: 1 }
-        });
-      }, 1500);
+      Q.enqueue(
+        setTimeout(() => {
+          confetti({
+            particleCount: 100,
+            origin: { x: 0.5, y: 1 }
+          });
+        }, 1500)
+      );
     }
   }, [matches]);
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import Queue from '../utils/Queue';
 
 import './styles/Card.css';
 
@@ -9,8 +10,17 @@ import './styles/Card.css';
 function Card({ emoji, dataEmoji, activeCards }) {
   // track if emoji is visible
   const [isEmojiVisible, setIsEmojiVisible] = useState(false);
+  // track timers
+  const [Q] = useState(new Queue());
   // get ref to this card to toggle classes
   const cardRef = useRef(null);
+
+  // clear timers on unmount
+  useEffect(() => {
+    return () => {
+      Q.dequeueAll().forEach(id => clearTimeout(id));
+    };
+  }, []);
 
   // determine if this card is active
   useEffect(() => {
@@ -20,7 +30,7 @@ function Card({ emoji, dataEmoji, activeCards }) {
       cardRef.current.classList.add('hide');
       cardRef.current.classList.remove('show');
       // set timer to hide emoji halfway through card flip animation
-      setTimeout(() => setIsEmojiVisible(false), 200);
+      Q.enqueue(setTimeout(() => setIsEmojiVisible(false), 200));
     }
 
     // determine if activeCards are equal
@@ -33,7 +43,7 @@ function Card({ emoji, dataEmoji, activeCards }) {
       cardRef.current.classList.add('show');
       cardRef.current.classList.remove('hide');
       // set timer to show emoji halfway through card flip animation
-      setTimeout(() => setIsEmojiVisible(true), 200);
+      Q.enqueue(setTimeout(() => setIsEmojiVisible(true), 200));
     }
 
     // determine if this card is one of the cards making areEqual true
@@ -41,13 +51,19 @@ function Card({ emoji, dataEmoji, activeCards }) {
 
     // if cards are equal and this component is one of those cards
     if (areEqual && isThisCard) {
-      // animate cards and remove from DOM
-      setTimeout(() => cardRef.current.classList.add('remove'), 1100);
-      setTimeout(() => {
-        cardRef.current.parentElement.innerHTML =
-          '<div class="empty w-100 h-100"></div>';
-      }, 1500);
-      setTimeout(() => cardRef.current.remove(), 1500);
+      // animate removal
+      Q.enqueue(
+        setTimeout(() => cardRef.current.classList.add('remove'), 1100)
+      );
+      // add placeholder
+      Q.enqueue(
+        setTimeout(() => {
+          cardRef.current.parentElement.innerHTML =
+            '<div class="empty w-100 h-100"></div>';
+        }, 1500)
+      );
+      // remove from DOM
+      Q.enqueue(setTimeout(() => cardRef.current.remove(), 1500));
     }
   }, [activeCards]);
 
