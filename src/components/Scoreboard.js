@@ -44,12 +44,14 @@ function Scoreboard({ attempts, matches, shuffle }) {
 
   return (
     <div className='scoreboard px-1'>
-      <div className='attempts d-flex justify-content-center align-items-center'>
-        ❌&nbsp;&nbsp;<span ref={attemptsRef}>{attempts}</span>
-      </div>
+      <div className='tally-container d-flex justify-content-center align-items-center'>
+        <div className='attempts d-flex justify-content-center align-items-center'>
+          ❌&nbsp;&nbsp;<span ref={attemptsRef}>{attempts}</span>
+        </div>
 
-      <div className='matches d-flex justify-content-center align-items-center'>
-        ✅&nbsp;&nbsp;<span ref={matchesRef}>{matches}</span>
+        <div className='matches d-flex justify-content-center align-items-center'>
+          ✅&nbsp;&nbsp;<span ref={matchesRef}>{matches}</span>
+        </div>
       </div>
 
       <button

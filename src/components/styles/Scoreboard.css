@@ -6,6 +6,10 @@
   padding: 0.25em 0 0.25em 0;
 }
 
+.tally-container {
+  width: calc(2 / 3 * 100%);
+}
+
 .attempts {
   width: 100%;
   padding: 6px 12px;
@@ -97,19 +101,34 @@
 }
 
 .scoreboard button {
-  width: 100%;
+  width: calc(1 / 3 * 100%);
   background-color: rgb(33, 50, 138);
 }
 
 /*
  * Media Queries
  */
-@media (min-height: 770px), (max-width: 220px) {
+@media (min-height: 770px), (max-width: 260px) {
   .scoreboard {
     padding: 0.5em 0 0.5em 0;
     flex-direction: column;
   }
-  .matches {
+
+  .tally-container {
+    width: 100%;
     margin: 6px 0;
+  }
+
+  .attempts {
+    margin-right: 3px;
+  }
+
+  .matches {
+    margin: 0;
+    margin-left: 3px;
+  }
+
+  .scoreboard button {
+    width: 100%;
   }
 }
