@@ -1,4 +1,10 @@
 .board {
   height: 70vh;
   margin: auto;
+  /* overflow: hidden; */
+}
+
+.canvas-confetti {
+  top: 0;
+  left: 0;
 }

@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import canvasConfetti from 'canvas-confetti';
 import PropTypes from 'prop-types';
 
 import Card from './Card';
@@ -17,7 +18,10 @@ function Board({
   matches,
   setMatches
 }) {
+  // track board (container)
   const boardRef = useRef(null);
+  // track canvas
+  const canvasRef = useRef(null);
 
   // swirl cards on updated shuffledEmojis
   useEffect(() => {
@@ -51,6 +55,24 @@ function Board({
     setTimeout(() => setActiveCards([]), 1500);
   }, [activeCards]);
 
+  useEffect(() => {
+    if (matches === 12) {
+      canvasRef.current.width = boardRef.current.clientWidth;
+      canvasRef.current.height = boardRef.current.clientHeight;
+      // add confetti global options
+      const confetti = canvasConfetti.create(canvasRef.current, {
+        resize: true
+      });
+      // make confetti with instance options
+      setTimeout(() => {
+        confetti({
+          particleCount: 100,
+          origin: { x: 0.5, y: 1 }
+        });
+      }, 1500);
+    }
+  }, [matches]);
+
   const handleCardClick = e => {
     // get closest card and ensure a card was actually clicked
     const target = e.target.closest('.card');
@@ -65,10 +87,9 @@ function Board({
     }
   };
 
-  // render emojis twice so they have a match
   return (
     <div
-      className='board d-flex flex-wrap justify-content-center align-items-center'
+      className='board d-flex flex-wrap justify-content-center align-items-center position-relative'
       onClick={handleCardClick}
       ref={boardRef}
     >
@@ -80,6 +101,13 @@ function Board({
           activeCards={activeCards}
         />
       ))}
+      {matches === 12 && (
+        <canvas
+          id='canvas-confetti'
+          className='position-absolute'
+          ref={canvasRef}
+        ></canvas>
+      )}
     </div>
   );
 }
@@ -97,3 +125,36 @@ Board.propTypes = {
 };
 
 export default Board;
+
+// TODO - implement this
+async function solve(containers) {
+  for (let i = 0; i < containers.length; i++) {
+    let first;
+    if (containers[i].firstElementChild.classList.contains('card')) {
+      first = containers[i].firstElementChild;
+    } else continue;
+
+    first.click();
+
+    for (let j = 0; j < containers.length; j++) {
+      if (j === i) continue;
+      let second;
+      if (containers[j].firstElementChild.classList.contains('card')) {
+        second = containers[j].firstElementChild;
+      } else continue;
+
+      if (
+        first.dataset.emoji.slice(0, -2) === second.dataset.emoji.slice(0, -2)
+      ) {
+        await new Promise(resolve => {
+          setTimeout(() => resolve(), 1000);
+        });
+        second.click();
+        await new Promise(resolve => {
+          setTimeout(() => resolve(), 2000);
+        });
+        break;
+      }
+    }
+  }
+}
