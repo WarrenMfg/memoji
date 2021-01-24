@@ -23,8 +23,6 @@ function App() {
   const [isAnimating, setIsAnimating] = useState(true);
   // track if user clicked solve
   const [userClickedSolve, setUserClickedSolve] = useState(false);
-  // track hover card mouse event
-  const [showHoverCard, setShowHoverCard] = useState(false);
   // track timers
   const [Q] = useState(new Queue());
 
@@ -108,34 +106,16 @@ function App() {
     setUserClickedSolve(true);
   };
 
-  /**
-   * Mouse enter handler for heading
-   */
-  const handleMemojiMouseEnter = () => {
-    setShowHoverCard(true);
-  };
-
-  /**
-   * Mouse leave handler for heading
-   */
-  const handleMemojiMouseLeave = () => {
-    setShowHoverCard(false);
-  };
-
   return (
     <main className='container d-flex flex-column align-items-center'>
       <h1
         className='focus-in-expand position-relative text-center m-0'
         onClick={handleMemojiClick}
-        onMouseEnter={handleMemojiMouseEnter}
-        onMouseLeave={handleMemojiMouseLeave}
       >
-        <span className={!isAnimating ? 'underline' : ''}>Mem</span>oji
+        <span className={isAnimating ? '' : 'underline'}>Mem</span>oji
         <span
-          className={`${
-            isAnimating ? 'invisible' : 'visible'
-          } hover-card position-absolute ${
-            showHoverCard ? 'show-hover-card' : 'hide-hover-card'
+          className={`hover-card position-absolute ${
+            isAnimating || userClickedSolve ? 'invisible' : 'visible'
           }`}
         >
           Click to solve
