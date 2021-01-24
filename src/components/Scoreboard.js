@@ -48,6 +48,25 @@ function Scoreboard({ attempts, matches, shuffle }) {
   });
 
   /**
+   * Shuffle button touchstart handler
+   *
+   * @param e Synthetic event object
+   */
+  const handleTouchStartShuffle = e => {
+    handleShuffleClick(e);
+  };
+
+  /**
+   * Shuffle button touchend handler
+   *
+   * @param e Synthetic event object
+   */
+  const handleTouchEndShuffle = e => {
+    e.preventDefault();
+    e.target.blur();
+  };
+
+  /**
    * Shuffle button click handler
    *
    * @param e Synthetic event object
@@ -76,6 +95,8 @@ function Scoreboard({ attempts, matches, shuffle }) {
         type='button'
         className='btn btn-primary'
         onClick={e => handleShuffleClick(e)}
+        onTouchStart={handleTouchStartShuffle}
+        onTouchEnd={handleTouchEndShuffle}
       >
         Shuffle
       </button>
