@@ -90,30 +90,8 @@ h1 span.underline::after {
   }
 }
 
-h1 span.hover-card {
-  top: 60px;
-  left: 50%;
-  width: 120px;
-  padding: 1em 0.75em 0.75em;
-  color: white;
-  background-color: #0d6efd;
-  font-size: 0.85rem;
-  clip-path: polygon(
-    50% 0%,
-    60% 10%,
-    100% 10%,
-    100% 100%,
-    0 100%,
-    0 10%,
-    40% 10%
-  );
-  transform: translate(-50%, 0);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
 h1:hover,
-h1:hover span.hover-card {
+h1:hover span.hover-card-container {
   z-index: 1;
   opacity: 1;
 }

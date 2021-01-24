@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import Hovercard from './Hovercard';
 import Board from './Board';
 import Scoreboard from './Scoreboard';
 import Queue from '../utils/Queue';
@@ -113,13 +114,10 @@ function App() {
         onClick={handleMemojiClick}
       >
         <span className={isAnimating ? '' : 'underline'}>Mem</span>oji
-        <span
-          className={`hover-card position-absolute ${
-            isAnimating || userClickedSolve ? 'invisible' : 'visible'
-          }`}
-        >
-          Click to solve
-        </span>
+        <Hovercard
+          isAnimating={isAnimating}
+          userClickedSolve={userClickedSolve}
+        />
       </h1>
       <div className='boards-container'>
         <Board

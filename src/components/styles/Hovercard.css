@@ -1,0 +1,35 @@
+span.hover-card-container {
+  bottom: 0px;
+  left: 50%;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+span.hover-card {
+  width: 120px;
+  padding: 1em;
+  color: white;
+  background-color: #0d6efd;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  transform: translate(-50%, 0);
+}
+
+span.notch {
+  width: 30px;
+  height: 30px;
+  background-color: #0d6efd;
+  transform: translate(-50%, 0) rotate(45deg);
+}
+
+@media (min-height: 770px) and (min-width: 576px) {
+  span.hover-card-container {
+    bottom: 9px;
+  }
+}
+
+@media (max-height: 769px) {
+  span.hover-card-container {
+    bottom: 0px;
+  }
+}
