@@ -37,7 +37,14 @@
       rgba(0, 0, 0, 0.1)
     );
   background-size: 70px 120px;
+  box-shadow: 0 0 5px gray;
+  transition: all 0.4s ease;
   cursor: pointer;
+}
+
+.card:hover {
+  background-color: rgb(41, 64, 175);
+  box-shadow: 0 0 10px 3px gray;
 }
 
 /* ----------------------------------------------

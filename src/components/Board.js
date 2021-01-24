@@ -96,7 +96,26 @@ function Board({
   }, [matches]);
 
   /**
-   * Delegated event listener
+   * Delegated event listener for touchstart
+   *
+   * @param e Synthetic event object
+   */
+  const handleTouchStart = e => {
+    handleCardClick(e);
+  };
+
+  /**
+   * Delegated event listener for touchend
+   *
+   * @param e Synthetic event object
+   */
+  const handleTouchEnd = e => {
+    e.preventDefault();
+    e.target.blur();
+  };
+
+  /**
+   * Delegated event listener for click
    *
    * @param e Synthetic event object
    */
@@ -118,6 +137,8 @@ function Board({
     <div
       className='board d-flex flex-wrap justify-content-center align-items-center position-relative'
       onClick={handleCardClick}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       ref={boardRef}
     >
       {/* cards */}
