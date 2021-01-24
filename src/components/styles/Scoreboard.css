@@ -108,7 +108,7 @@
 /*
  * Media Queries
  */
-@media (min-height: 770px), (max-width: 260px) {
+@media (min-height: 770px) {
   .scoreboard {
     padding: 0.5em 0 0.5em 0;
     flex-direction: column;

@@ -11,16 +11,16 @@ import './styles/Board.css';
  * Board component - container
  */
 function Board({
+  boardRef,
   shuffledEmojis,
   activeCards,
   setActiveCards,
   attempts,
   setAttempts,
   matches,
-  setMatches
+  setMatches,
+  userClickedSolve
 }) {
-  // track board (container)
-  const boardRef = useRef(null);
   // track canvas
   const canvasRef = useRef(null);
   // track timers
@@ -119,6 +119,7 @@ function Board({
 }
 
 Board.propTypes = {
+  boardRef: PropTypes.object.isRequired,
   shuffledEmojis: PropTypes.arrayOf(
     PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
   ).isRequired,
@@ -127,40 +128,8 @@ Board.propTypes = {
   attempts: PropTypes.number.isRequired,
   setAttempts: PropTypes.func.isRequired,
   matches: PropTypes.number.isRequired,
-  setMatches: PropTypes.func.isRequired
+  setMatches: PropTypes.func.isRequired,
+  userClickedSolve: PropTypes.bool.isRequired
 };
 
 export default Board;
-
-// TODO - implement this
-async function solve(containers) {
-  for (let i = 0; i < containers.length; i++) {
-    let first;
-    if (containers[i].firstElementChild.classList.contains('card')) {
-      first = containers[i].firstElementChild;
-    } else continue;
-
-    first.click();
-
-    for (let j = 0; j < containers.length; j++) {
-      if (j === i) continue;
-      let second;
-      if (containers[j].firstElementChild.classList.contains('card')) {
-        second = containers[j].firstElementChild;
-      } else continue;
-
-      if (
-        first.dataset.emoji.slice(0, -2) === second.dataset.emoji.slice(0, -2)
-      ) {
-        await new Promise(resolve => {
-          setTimeout(() => resolve(), 1000);
-        });
-        second.click();
-        await new Promise(resolve => {
-          setTimeout(() => resolve(), 2000);
-        });
-        break;
-      }
-    }
-  }
-}

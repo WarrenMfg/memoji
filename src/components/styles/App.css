@@ -7,6 +7,7 @@ body {
 h1 {
   color: #b33b64;
   padding: 0.25em;
+  cursor: pointer;
 }
 
 h1.focus-in-expand {
@@ -51,16 +52,57 @@ h1.focus-in-expand {
 
 h1 span {
   color: #ff4787;
-  text-decoration: underline;
+}
+
+h1 span.underline {
+  position: relative;
+}
+
+h1 span.underline::after {
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  border-radius: 1em;
+  left: 0;
+  bottom: 0;
+  content: '';
+  --webkit-animation: underline 1s both;
+  animation: underline 1s both;
+}
+
+@-webkit-keyframes underline {
+  0% {
+    background-color: ivory;
+  }
+
+  100% {
+    background-color: #ff4787;
+  }
+}
+
+@keyframes underline {
+  0% {
+    background-color: ivory;
+  }
+
+  100% {
+    background-color: #ff4787;
+  }
 }
 
 .boards-container {
-  max-width: 320px;
+  width: 320px;
 }
 
 /*
  * Media Queries
  */
+@media (max-width: 320px) {
+  .boards-container {
+    width: 250px;
+  }
+}
+
 @media (min-height: 770px) {
   h1 {
     padding: 0.5em;
