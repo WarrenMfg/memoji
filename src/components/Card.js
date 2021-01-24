@@ -5,7 +5,7 @@ import Queue from '../utils/Queue';
 import './styles/Card.css';
 
 /**
- * Card component - basic game piece
+ * Card - stateful functional component
  */
 function Card({ emoji, dataEmoji, activeCards }) {
   // track if emoji is visible
@@ -15,14 +15,18 @@ function Card({ emoji, dataEmoji, activeCards }) {
   // get ref to this card to toggle classes
   const cardRef = useRef(null);
 
-  // clear timers on unmount
+  /**
+   * Clear timers on unmount
+   */
   useEffect(() => {
     return () => {
       Q.dequeueAll().forEach(id => clearTimeout(id));
     };
   }, []);
 
-  // determine if this card is active
+  /**
+   * Determine if this card is active
+   */
   useEffect(() => {
     // if no activeCards
     if (!activeCards.length && cardRef.current.classList.contains('show')) {

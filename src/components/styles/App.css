@@ -8,6 +8,7 @@ h1 {
   color: #b33b64;
   padding: 0.25em;
   cursor: pointer;
+  z-index: 1;
 }
 
 h1.focus-in-expand {
@@ -50,7 +51,7 @@ h1.focus-in-expand {
   }
 }
 
-h1 span {
+h1 span:first-of-type {
   color: #ff4787;
 }
 
@@ -87,6 +88,78 @@ h1 span.underline::after {
 
   100% {
     background-color: #ff4787;
+  }
+}
+
+h1 span.hover-card {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  width: 150px;
+  padding: 1em 0.75em 0.75em;
+  color: white;
+  background-color: #0d6efd;
+  font-size: 1rem;
+  clip-path: polygon(
+    50% 0%,
+    60% 10%,
+    100% 10%,
+    100% 100%,
+    0 100%,
+    0 10%,
+    40% 10%
+  );
+  transform: translate(-50%, 0);
+  z-index: auto;
+}
+
+h1 span.hover-card.show-hover-card {
+  --webkit-animation: show-hover-card 0.2s forwards;
+  animation: show-hover-card 0.2s forwards;
+}
+
+@-webkit-keyframes show-hover-card {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes show-hover-card {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+h1 span.hover-card.hide-hover-card {
+  --webkit-animation: hide-hover-card 0.2s forwards;
+  animation: hide-hover-card 0.2s forwards;
+}
+
+@-webkit-keyframes hide-hover-card {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes hide-hover-card {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
   }
 }
 

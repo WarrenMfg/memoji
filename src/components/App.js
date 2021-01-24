@@ -6,7 +6,7 @@ import Queue from '../utils/Queue';
 import './styles/App.css';
 
 /**
- * App component - stateful container
+ * App - stateful functional component
  */
 function App() {
   // track board (container)
@@ -23,53 +23,79 @@ function App() {
   const [isAnimating, setIsAnimating] = useState(true);
   // track if user clicked solve
   const [userClickedSolve, setUserClickedSolve] = useState(false);
+  // track hover card mouse event
+  const [showHoverCard, setShowHoverCard] = useState(false);
   // track timers
   const [Q] = useState(new Queue());
 
-  // on mount, shuffle emojis
+  /**
+   * On mount, shuffle emojis
+   */
   useEffect(() => {
+    // shuffle and save to state
     setShuffledEmojis(shuffleEmojis(emojis));
-
+    // toggle isAnimating
     Q.enqueue(setTimeout(() => setIsAnimating(false), 2500));
-
+    // clean up
     return () => {
       Q.dequeueAll().forEach(id => clearTimeout(id));
     };
   }, []);
 
-  // when shuffledEmojis are emptied, then shuffle
+  /**
+   * When shuffledEmojis are emptied, then shuffle
+   */
   useEffect(() => {
     if (!shuffledEmojis.length) {
       setShuffledEmojis(shuffleEmojis(emojis));
     }
   }, [shuffledEmojis]);
 
-  // when isAnimating === true
+  /**
+   * When isAnimating, set timer to toggle off
+   */
   useEffect(() => {
     if (isAnimating) {
       Q.enqueue(setTimeout(() => setIsAnimating(false), 2500));
     }
-  }, [isAnimating]);
+  });
 
-  // solve when userClickedSolve === true
+  /**
+   * When user clicks heading, solve
+   */
   useEffect(() => {
     if (userClickedSolve) {
       solve([...boardRef.current.children], Q);
     }
   }, [userClickedSolve]);
 
-  // shuffle button click handler
+  /**
+   * Shuffle button click handler
+   *
+   * @param e Sythetic event object
+   */
   const handleShuffleClick = e => {
+    // clear timers
     Q.dequeueAll().forEach(id => clearTimeout(id));
+    // reset shuffledEmojis
     setShuffledEmojis([]);
+    // reset attempts
     setAttempts(0);
+    // reset matches
     setMatches(0);
+    // reset activeCards
     setActiveCards([]);
+    // toggle on isAnimating
     setIsAnimating(true);
+    // toggle off userClickedSolve
     setUserClickedSolve(false);
+    // blur button
     e.target.blur();
   };
 
+  /**
+   * Click handler when user clicks heading
+   */
   const handleMemojiClick = () => {
     // if animating or already solving, do nothing
     if (isAnimating || userClickedSolve) return;
@@ -82,13 +108,38 @@ function App() {
     setUserClickedSolve(true);
   };
 
+  /**
+   * Mouse enter handler for heading
+   */
+  const handleMemojiMouseEnter = () => {
+    setShowHoverCard(true);
+  };
+
+  /**
+   * Mouse leave handler for heading
+   */
+  const handleMemojiMouseLeave = () => {
+    setShowHoverCard(false);
+  };
+
   return (
     <main className='container d-flex flex-column align-items-center'>
       <h1
-        className='focus-in-expand text-center m-0'
+        className='focus-in-expand position-relative text-center m-0'
         onClick={handleMemojiClick}
+        onMouseEnter={handleMemojiMouseEnter}
+        onMouseLeave={handleMemojiMouseLeave}
       >
         <span className={!isAnimating ? 'underline' : ''}>Mem</span>oji
+        <span
+          className={`${
+            isAnimating ? 'invisible' : 'visible'
+          } hover-card position-absolute ${
+            showHoverCard ? 'show-hover-card' : 'hide-hover-card'
+          }`}
+        >
+          Click to solve
+        </span>
       </h1>
       <div className='boards-container'>
         <Board

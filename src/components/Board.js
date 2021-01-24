@@ -8,7 +8,7 @@ import Card from './Card';
 import './styles/Board.css';
 
 /**
- * Board component - container
+ * Board - stateful functional component
  */
 function Board({
   boardRef,
@@ -26,14 +26,18 @@ function Board({
   // track timers
   const [Q] = useState(new Queue());
 
-  // clear timers on unmount
+  /**
+   * Clear timers on unmount
+   */
   useEffect(() => {
     return () => {
       Q.dequeueAll().forEach(id => clearTimeout(id));
     };
   }, []);
 
-  // swirl cards on updated shuffledEmojis
+  /**
+   * Swirl cards on updated shuffledEmojis
+   */
   useEffect(() => {
     // get card containers
     const cards = [...boardRef.current.children];
@@ -43,7 +47,9 @@ function Board({
     });
   }, [shuffledEmojis]);
 
-  // track activeCards
+  /**
+   * Track activeCards to tally attempts and matches
+   */
   useEffect(() => {
     // when empty or only one card, do nothing
     if (activeCards.length < 2) return;
@@ -59,12 +65,18 @@ function Board({
     Q.enqueue(setTimeout(() => setActiveCards([]), 1500));
   }, [activeCards]);
 
+  /**
+   * If user clicked solve, clear all timers
+   */
   useEffect(() => {
     if (userClickedSolve) {
       Q.dequeueAll().forEach(id => clearTimeout(id));
     }
   }, [userClickedSolve]);
 
+  /**
+   * If winner, show confetti
+   */
   useEffect(() => {
     if (matches === 12) {
       canvasRef.current.width = boardRef.current.clientWidth;
@@ -83,6 +95,11 @@ function Board({
     }
   }, [matches]);
 
+  /**
+   * Delegated event listener
+   *
+   * @param e Synthetic event object
+   */
   const handleCardClick = e => {
     // get closest card and ensure a card was actually clicked
     const target = e.target.closest('.card');
