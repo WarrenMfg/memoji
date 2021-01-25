@@ -2,7 +2,7 @@
 
 A memory game with emojis
 
-<a href='https://memoji-memory-game.netlify.app/' target='_blank'>Netlify website</a>
+[Netlify website](https://memoji-memory-game.netlify.app/)
 
 ## Shuffle
 
