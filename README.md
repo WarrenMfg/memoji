@@ -1,6 +1,6 @@
 # Memoji
 
-A memory game with emojis
+A memory game with emojis 😜
 
 [Netlify website](https://memoji-memory-game.netlify.app/)
 
