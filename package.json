@@ -4,6 +4,7 @@
   "description": "A memory game with emojis",
   "main": "src/index.js",
   "scripts": {
+    "test": "cypress open",
     "watch": "parcel watch src/index.html --no-source-maps --out-dir dist",
     "build": "parcel build src/index.html --no-source-maps --out-dir dist"
   },

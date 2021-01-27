@@ -28,6 +28,14 @@ A memory game with emojis
 
 ![Confetti](./gifs/confetti.gif)
 
+# Tests
+
+[Cypress.io](https://www.cypress.io/)
+
+![Tests](./gifs/tests.gif)
+
+![Tests](./gifs/tests.png)
+
 # Built With
 
 - [React](https://reactjs.org/) - Framework
