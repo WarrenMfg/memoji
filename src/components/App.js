@@ -199,7 +199,7 @@ async function solve(containers, Q) {
 
     let second;
     // find matching card
-    for (let j = 0; j < containers.length; j++) {
+    for (let j = 0; j < containers.length - 1; j++) {
       // skip first card
       if (j === i) continue;
       // if card, then assign; otherwise, continue iterating
