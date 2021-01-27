@@ -2,6 +2,8 @@
 
 A memory game with emojis 😜
 
+[Heroku website](https://memoji-memory-game.herokuapp.com/)
+
 [Netlify website](https://memoji-memory-game.netlify.app/)
 
 ## Shuffle
