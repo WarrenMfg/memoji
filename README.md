@@ -2,6 +2,8 @@
 
 A memory game with emojis 😜
 
+[AWS EC2 website](http://ec2-34-207-57-108.compute-1.amazonaws.com:5500/)
+
 [Heroku website](https://memoji-memory-game.herokuapp.com/)
 
 [Netlify website](https://memoji-memory-game.netlify.app/)
