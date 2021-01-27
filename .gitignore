@@ -1,5 +1,5 @@
 node_modules
-dist
+public
 .cache
 TODO
 cypress/videos
