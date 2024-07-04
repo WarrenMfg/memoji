@@ -1,4 +1,4 @@
-![Memoji](./gifs/memoji.webp)
+![Memoji](./gifs/memoji.jpeg)
 
 # Memoji
 
