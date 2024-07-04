@@ -4,8 +4,6 @@ A memory game with emojis 😜
 
 [Video walkthrough](https://youtu.be/ll-iirduROs)
 
-[Heroku website](https://memoji-memory-game.herokuapp.com/)
-
 [Netlify website](https://memoji-memory-game.netlify.app/)
 
 ## Shuffle
