@@ -52,7 +52,7 @@ A memory game with emojis 😜
 
 # Author
 
-- **Kent Warren** - [Portfolio](https://kent-warren.bss.design/) - [LinkedIn](https://www.linkedin.com/in/theartofwarren)
+- **Kent Warren** - [Resume](https://kentwarren.dev) - [LinkedIn](https://www.linkedin.com/in/theartofwarren)
 
 # License
 
