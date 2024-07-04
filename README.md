@@ -1,3 +1,5 @@
+![Memoji](./gifs/memoji.webp)
+
 # Memoji
 
 A memory game with emojis 😜
